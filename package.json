@@ -1,0 +1,25 @@
+{
+  "name": "trumptweetrage",
+  "version": "1.0.0",
+  "description": "How much does The Donald rage? His tweets tell us.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kitrak/trumptweetrage.git"
+  },
+  "keywords": [
+    "Donald",
+    "Trump",
+    "Tweet",
+    "Rage"
+  ],
+  "author": "Kartik Subramanian",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kitrak/trumptweetrage/issues"
+  },
+  "homepage": "https://github.com/kitrak/trumptweetrage#readme"
+}
