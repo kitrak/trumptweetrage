@@ -2,11 +2,17 @@ const express = require('express')
 var Twitter = require('twitter')
 var Tortoise = require('tortoise')
 const app = express()
+const pg = require('pg');
 
 tortoise = new Tortoise('amqp://localhost')
 
-var client = new Twitter({
+const connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/rdt';
 
+var client = new Twitter({
+  consumer_key: '',
+  consumer_secret: '',
+  access_token_key: '',
+  access_token_secret: ''
 })
 
 client.stream('statuses/filter', {follow: '25073877, 279118291'}, function(stream) {
@@ -49,22 +55,22 @@ tortoise
 	// query.on('end', () => { pg_client.end(); });
 
 
-	// pg.connect(connectionString, function (err, client, done) {
-	// 	if (err) {
-	// 	  // pass the error to the express error handler
-	// 	  return next(err)
-	// 	}
-	// 	client.query('INSERT INTO tweets(json_text, created_at) VALUES($1, $2)', [obj.event, db_date], function (err, result) {
-	// 	  done() //this done callback signals the pg driver that the connection can be closed or returned to the connection pool
+	pg.connect(connectionString, function (err, client, done) {
+		if (err) {
+		  // pass the error to the express error handler
+		  return next(err)
+		}
+		client.query('INSERT INTO tweets(json_text, created_at) VALUES($1, $2)', [obj.event, db_date], function (err, result) {
+		  done() //this done callback signals the pg driver that the connection can be closed or returned to the connection pool
 
-	// 	  if (err) {
-	// 	    // pass the error to the express error handler
-	// 	    console.log(err)
-	// 	  }
+		  if (err) {
+		    // pass the error to the express error handler
+		    console.log(err)
+		  }
 
-	// 	  //res.send(200)
-	// 	})
-	// })
+		  //res.send(200)
+		})
+	})
 
   ack(); // or nack(); 
 });
