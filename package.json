@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/kitrak/trumptweetrage#readme",
   "dependencies": {
-    "express": "^4.15.2"
+    "express": "^4.15.2",
+    "twitter": "^1.7.0"
   }
 }
