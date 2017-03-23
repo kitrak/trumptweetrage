@@ -1,8 +1,19 @@
 const express = require('express')
+const path = require('path')
+const exphbs = require('express-handlebars')
 var Twitter = require('twitter')
 var Tortoise = require('tortoise')
 const app = express()
 const pg = require('pg');
+
+app.engine('.hbs', exphbs({  
+  defaultLayout: 'main',
+  extname: '.hbs',
+  layoutsDir: path.join(__dirname, 'views/layouts')
+}))
+
+app.set('view engine', '.hbs')  
+app.set('views', path.join(__dirname, 'views'))
 
 tortoise = new Tortoise('amqp://localhost')
 
@@ -76,7 +87,9 @@ tortoise
 });
 
 app.get('/', (req, res) => {
-	res.send("We don't have tweets yet but we're working on it!")
+	res.render('home', {
+    name: 'John'
+  })
 })
 
 app.listen(3000, function() {
