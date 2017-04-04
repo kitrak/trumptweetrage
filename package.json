@@ -26,6 +26,7 @@
   "dependencies": {
     "express": "^4.15.2",
     "express-handlebars": "^3.0.0",
+    "mongodb": "^2.2.25",
     "pg": "^6.1.5",
     "tortoise": "^1.0.1",
     "twitter": "^1.7.0"
