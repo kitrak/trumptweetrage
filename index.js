@@ -5,6 +5,10 @@ var Twitter = require('twitter')
 var Tortoise = require('tortoise')
 const app = express()
 const pg = require('pg');
+var mongodb = require('mongodb');
+
+var MongoClient = mongodb.MongoClient;
+var url = 'mongodb://localhost:27017/rdt';
 
 app.engine('.hbs', exphbs({  
   defaultLayout: 'main',
@@ -59,12 +63,51 @@ tortoise
     console.log(obj.event.created_at)
     dt = obj.event.created_at
     db_date = new Date(Date.parse(dt))
+    created_date = db_date
 
  //    pg_client.connect();
  //    const query = pg_client.query
  //    ('INSERT INTO tweets(json_text, created_at) VALUES($1, $2)', obj.event, db_date)
 	// query.on('end', () => { pg_client.end(); });
+  // Insert into Mongodb
+  MongoClient.connect(url, function (err, db) {
+    if (err) {
+      console.log('Unable to connect to the mongoDB server. Error:', err);
+    } else {
+      //HURRAY!! We are connected. :)
+      console.log('Connection established to', url);
 
+      var collection = db.collection('tweets');
+
+      // Get the embedded HTML
+      var screen_name = obj.event.user.screen_name
+      var embed_url = 'https://twitter.com/' + screen_name + '/status/' + obj.event.id_str
+      var embed_html = ''
+      client.get('statuses/oembed', {url: embed_url}, function(error, etweet, resp) {
+        if(error) throw error;
+        embed_html = etweet.html
+        console.log(embed_html);  // The html tweet
+        var tweet = { tweet_id: obj.event.id,
+                embed_id: obj.event.id_str,
+                user: {id: obj.event.user.id, id_str: obj.event.user.id_str, name: obj.event.user.name, screen_name: obj.event.user.screen_name},
+                text: obj.event.text,
+                embed_html: embed_html,
+                created_at: created_date,
+                updated_at: created_date
+              };
+
+        collection.insert([tweet], function (err, result) {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log('Inserted %d documents into the "tweets" collection. The documents inserted with "_id" are:', result.length, result);
+          }
+          //Close connection
+          db.close();
+        });
+      });
+    }
+  });
 
 	pg.connect(connectionString, function (err, client, done) {
 		if (err) {
