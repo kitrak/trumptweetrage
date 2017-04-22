@@ -4,6 +4,7 @@
   "description": "How much does The Donald rage? His tweets tell us.",
   "main": "index.js",
   "scripts": {
+    "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js"
   },
@@ -24,11 +25,14 @@
   },
   "homepage": "https://github.com/kitrak/trumptweetrage#readme",
   "dependencies": {
+    "dotenv": "^4.0.0",
     "express": "^4.15.2",
     "express-handlebars": "^3.0.0",
+    "joi": "^10.4.1",
     "mongodb": "^2.2.25",
     "pg": "^6.1.5",
     "tortoise": "^1.0.1",
-    "twitter": "^1.7.0"
+    "twitter": "^1.7.0",
+    "winston": "^2.3.1"
   }
 }
