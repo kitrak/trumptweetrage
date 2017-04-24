@@ -35,5 +35,3 @@ if (!config.logger.enabled) {
 }
 
 module.exports = config
-
-module.exports = config
