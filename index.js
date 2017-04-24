@@ -10,9 +10,8 @@ if (type === 'web') {
   require('./web')
 } else if (type === 'twitter') {
   require('./worker/twitter')
+} else if (type === 'rabbitmq') {
+  require('./worker/rabbitmq')
 } else {
-  throw new Error(`
-    ${type} is an unsupported process type. 
-    Use one of: 'web', 'twitter'!
-  `)
+  throw new Error(`${type} is an unsupported process type. Use one of: 'web', 'twitter', 'rabbitmq'!`)
 }
