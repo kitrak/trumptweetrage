@@ -1,7 +1,9 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
-
+const path = require('path')
 const app = express()
+const mongo = require('../models/mongo')
+const config = require('../config')
 
 app.engine('.hbs', exphbs({
     defaultLayout: 'main',
@@ -18,7 +20,8 @@ app.listen(3000, function() {
 })
 
 app.get('/', (req, res) => {
-    MongoClient.connect(url, function (err, db) {
+    let url = config.mongo.url
+    mongo.connect(url, function (err, db) {
         if (err) {
             console.log('Unable to connect to the mongoDB server. Error:', err);
         } else {
