@@ -11,13 +11,11 @@ app.engine('.hbs', exphbs({
     layoutsDir: path.join(__dirname, 'views/layouts')
 }))
 
+app.set('port', (process.env.PORT || 5000));
+
 app.use(express.static('../public'))
 app.set('view engine', '.hbs')
 app.set('views', path.join(__dirname, 'views'))
-
-app.listen(3000, function() {
-    console.log('Listening on 3000')
-})
 
 app.get('/', (req, res) => {
     let url = config.mongo.uri
@@ -53,4 +51,8 @@ app.get('/', (req, res) => {
         //   tweet: 'Sorry, an error occurred'
         // })
     })
+})
+
+app.listen(app.get('port'), function() {
+    console.log('Listening on port', app.get('port'))
 })
