@@ -3,7 +3,7 @@
 const joi = require('joi')
 
 const envSchema = joi.object({
-  MONGO_URL: joi.string()
+  MONGO_URI: joi.string()
     .required(),
 }).unknown()
   .required()
@@ -15,7 +15,7 @@ if (error) {
 
 const config = {
   mongo: {
-    url: envVars.MONGO_URL
+    uri: envVars.MONGO_URI
   }
 }
 

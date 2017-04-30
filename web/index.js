@@ -20,7 +20,7 @@ app.listen(3000, function() {
 })
 
 app.get('/', (req, res) => {
-    let url = config.mongo.url
+    let url = config.mongo.uri
     mongo.connect(url, function (err, db) {
         if (err) {
             console.log('Unable to connect to the mongoDB server. Error:', err);

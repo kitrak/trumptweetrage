@@ -20,7 +20,7 @@ tortoise
     let created_date = db_date
 
   // Insert into Mongodb
-  let url = config.mongo.url
+  let url = config.mongo.uri
   mongo.connect(url, function (err, db) {
     if (err) {
       console.log('Unable to connect to the mongoDB server. Error:', err);
